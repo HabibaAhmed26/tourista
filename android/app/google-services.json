@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "709513673291",
+    "project_id": "ai-travel-assistant-be3bb",
+    "storage_bucket": "ai-travel-assistant-be3bb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709513673291:android:2c5dce4e990b51a2c02bce",
+        "android_client_info": {
+          "package_name": "com.example.tourista"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBHjy4Ldv7AfSdO1y-CLS82tJXQd5LiUAg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
