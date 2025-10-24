@@ -3,7 +3,6 @@ import 'login.dart';
 
 void main() {
   runApp(const MyApp());
-  print("d");
 }
 
 class MyApp extends StatelessWidget {
