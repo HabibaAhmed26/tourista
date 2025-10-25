@@ -83,4 +83,5 @@ class DefaultFirebaseOptions {
     authDomain: 'ai-travel-assistant-be3bb.firebaseapp.com',
     storageBucket: 'ai-travel-assistant-be3bb.firebasestorage.app',
   );
+
 }
