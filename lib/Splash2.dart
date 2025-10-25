@@ -13,22 +13,6 @@ class OnboardingScreen2 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Skip button
-              Align(
-                alignment: Alignment.topRight,
-                child: TextButton(
-                  onPressed: () {
-                    // Navigate to next page or home
-                  },
-                  child: const Text(
-                    "Skip",
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.brown,
-                    ),
-                  ),
-                ),
-              ),
 
               const SizedBox(height: 40),
 
@@ -76,54 +60,7 @@ class OnboardingScreen2 extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  // Dots indicator
-                  Row(
-                    children: [
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 31, 74, 149),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        decoration: const BoxDecoration(
-                          color: Color.fromARGB(255, 31, 74, 194),
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                      Container(
-                        width: 8,
-                        height: 8,
-                        margin: const EdgeInsets.symmetric(horizontal: 2),
-                        decoration: const BoxDecoration(
-                          color: Colors.grey,
-                          shape: BoxShape.circle,
-                        ),
-                      ),
-                    ],
-                  ),
 
-                  // Next button
-                  ElevatedButton(
-                    onPressed: () {
-                      // Go to next onboarding page
-                    },
-                    style: ElevatedButton.styleFrom(
-                      shape: const CircleBorder(),
-                      backgroundColor: Colors.brown,
-                      padding: const EdgeInsets.all(14),
-                    ),
-                    child: const Icon(
-                      Icons.arrow_forward,
-                      color: Colors.white,
-                    ),
-                  ),
                 ],
               ),
             ],
