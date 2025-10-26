@@ -2,8 +2,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:tourista/core/models/user_model.dart';
 import 'package:tourista/core/network/firestore/doc_constants.dart';
 
-class Firestore {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+class FireStore {
+  final FirebaseFirestore _firestore;
+  FireStore({required FirebaseFirestore firestore}) : _firestore = firestore;
   CollectionReference<Map<String, dynamic>> get _users =>
       _firestore.collection(DocConstants.usersCollection);
   Future<void> createUserProfile(AppUser user) async {

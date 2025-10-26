@@ -32,4 +32,5 @@ class AppStrings {
   static const String nameNotValid = "Name must contain letters only";
 
   static const String deleteAccount = "Delete Account";
+  static const String userNotFound = "User Not Found";
 }
