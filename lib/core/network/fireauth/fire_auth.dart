@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:tourista/core/models/user_model.dart';
@@ -5,6 +7,11 @@ import 'package:tourista/core/network/firestore/firestore.dart';
 
 class FireAuth {
   final FirebaseAuth _auth;
+  void _setupLocalization() {
+    // Set based on device locale or default to English
+    final locale = Platform.localeName.split('_').first;
+    _auth.setLanguageCode(locale);
+  }
 
   FireAuth({required FirebaseAuth firebaseAuth, required FireStore firestore})
     : _auth = firebaseAuth;
@@ -39,5 +46,12 @@ class FireAuth {
     final user = _auth.currentUser;
     if (user == null) return null;
     return user.getIdToken();
+  }
+
+  Future<void> deleteUser() async {
+    final user = _auth.currentUser;
+    if (user != null) {
+      await user.delete();
+    }
   }
 }

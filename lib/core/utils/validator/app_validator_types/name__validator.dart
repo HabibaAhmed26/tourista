@@ -20,6 +20,13 @@ class NameValidator extends AppValidator {
     if (AppRegExp.space.hasMatch(value)) {
       reasons.add(AppStrings.nameNotValid);
     }
+    if (AppRegExp.capitalLetter.hasMatch(value) &&
+        !AppRegExp.capitalFirstLetter.hasMatch(value)) {
+      reasons.add(AppStrings.nameNotValid);
+    }
+    if (!AppRegExp.capitalFirstLetter.hasMatch(value)) {
+      reasons.add(AppStrings.nameNoFirstCapital);
+    }
     return reasons;
   }
 }

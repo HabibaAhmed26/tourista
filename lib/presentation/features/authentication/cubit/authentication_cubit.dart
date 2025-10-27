@@ -16,6 +16,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     : _auth = auth,
       _firestore = firestore,
       super(AuthenticationInitial());
+
   Future<void> signIn(String email, String password) async {
     emit(Authenticationloading());
     try {
@@ -32,15 +33,28 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
 
   Future<void> signUp(AppUser newUser, String password) async {
     emit(Authenticationloading());
+    AppUser? user;
+    User? currentUser;
     try {
-      User? currentUser = await _auth.signUp(newUser.email, password);
+      currentUser = await _auth.signUp(newUser.email, password);
+      newUser = newUser.copyWith(uid: currentUser?.uid);
+
       await _firestore.createUserProfile(newUser);
-      AppUser? user = await _firestore.getUserProfile(currentUser!.uid);
+
+      user = await _firestore.getUserProfile(currentUser!.uid);
       if (user == null) {
         emit(AuthenticationError(message: AppStrings.userNotFound));
       }
       emit(Authenticationloaded(currentUser: user!));
     } catch (e) {
+      // Delete user if any error occurs during profile creation
+      if (user != null) {
+        try {
+          await _auth.deleteUser();
+        } catch (deleteError) {
+          print('Failed to delete user: $deleteError');
+        }
+      }
       emit(AuthenticationError(message: e.toString()));
     }
   }

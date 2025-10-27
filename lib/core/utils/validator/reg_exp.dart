@@ -5,4 +5,5 @@ class AppRegExp {
   static RegExp smallLetter = RegExp(r'[a-z]+');
   static RegExp space = RegExp(r'\s');
   static RegExp specialCharacters = RegExp(r'[^\w\s\u0600-\u06FF]');
+  static RegExp capitalFirstLetter = RegExp(r'^[A-Z]');
 }

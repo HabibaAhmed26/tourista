@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tourista/core/di/di.dart';
+import 'package:tourista/core/models/user_model.dart';
+import 'package:tourista/core/utils/app_strings.dart';
+import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/profile/profile.dart';
 
 class CleanLoginPage extends StatefulWidget {
   const CleanLoginPage({super.key});
@@ -37,10 +43,7 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [
-              Color(0xFF667eea),
-              Color.fromARGB(255, 43, 35, 149),
-            ],
+            colors: [Color(0xFF667eea), Color.fromARGB(255, 43, 35, 149)],
           ),
         ),
         child: SafeArea(
@@ -52,7 +55,7 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const SizedBox(height: 40.0),
-                  
+
                   // Title
                   const Text(
                     'Sign in',
@@ -108,11 +111,15 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
                                 hintText: 'Enter your email',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey[300]!,
+                                  ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: const BorderSide(color: Colors.blue),
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16.0,
@@ -153,11 +160,15 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
                                 hintText: 'Enter your password',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: BorderSide(color: Colors.grey[300]!),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey[300]!,
+                                  ),
                                 ),
                                 focusedBorder: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8.0),
-                                  borderSide: const BorderSide(color: Colors.blue),
+                                  borderSide: const BorderSide(
+                                    color: Colors.blue,
+                                  ),
                                 ),
                                 contentPadding: const EdgeInsets.symmetric(
                                   horizontal: 16.0,
@@ -208,9 +219,7 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
                                 ),
                                 Text(
                                   'Remember Me',
-                                  style: TextStyle(
-                                    color: Colors.grey[700],
-                                  ),
+                                  style: TextStyle(color: Colors.grey[700]),
                                 ),
                               ],
                             ),
@@ -234,24 +243,59 @@ class _CleanLoginPageState extends State<CleanLoginPage> {
                         SizedBox(
                           width: double.infinity,
                           height: 50.0,
-                          child: ElevatedButton(
-                            onPressed: _login,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Color.fromARGB(255, 43, 35, 149),
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8.0),
+                          child:
+                              BlocListener<
+                                AuthenticationCubit,
+                                AuthenticationState
+                              >(
+                                listener: (context, state) {
+                                  if (state is AuthenticationError) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(state.message)),
+                                    );
+                                    print(state.message);
+                                  }
+                                  if (state is Authenticationloaded) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Profile(),
+                                      ),
+                                    );
+                                  }
+                                },
+                                child: ElevatedButton(
+                                  //onPressed: _login,
+                                  onPressed: () async {
+                                    await context
+                                        .read<AuthenticationCubit>()
+                                        .signIn(
+                                          _emailController.text,
+                                          _passwordController.text,
+                                        );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color.fromARGB(
+                                      255,
+                                      43,
+                                      35,
+                                      149,
+                                    ),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    elevation: 0,
+                                  ),
+                                  child: const Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
                               ),
-                              elevation: 0,
-                            ),
-                            child: const Text(
-                              'Login',
-                              style: TextStyle(
-                                fontSize: 16.0,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                          ),
                         ),
                       ],
                     ),

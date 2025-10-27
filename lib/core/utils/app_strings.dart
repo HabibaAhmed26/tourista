@@ -30,7 +30,14 @@ class AppStrings {
   static const String invalidPhone = "Invalid Phone";
   static const String nameIsValid = "Name is Required";
   static const String nameNotValid = "Name must contain letters only";
+  static const String nameNoFirstCapital = "First letter must be capital";
 
   static const String deleteAccount = "Delete Account";
   static const String userNotFound = "User Not Found";
+  static const String wrongPassword = "Wrong Password";
+  static const String signupError = "Error occurred during Sign Up";
+  static const String signUpinvalid =
+      "Invalid Sign Up Credentials , please try again.";
+  static const String logininvalid =
+      "Invalid log in Credentials , please try again.";
 }
