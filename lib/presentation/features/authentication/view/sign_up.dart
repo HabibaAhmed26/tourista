@@ -275,6 +275,44 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ),
                           ),
+                          Center(child: Text(AppStrings.or)),
+                          SizedBox(
+                            width: double.infinity,
+                            height: 56.0,
+                            child: ElevatedButton(
+                              onPressed: context
+                                  .read<AuthenticationCubit>()
+                                  .googleSignIn,
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black87,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                  side: BorderSide(color: Colors.grey.shade300),
+                                ),
+                                elevation: 2,
+                                shadowColor: Colors.black.withOpacity(0.1),
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    AppAssets.googleLogo,
+                                    width: 24,
+                                    height: 24,
+                                  ),
+                                  const SizedBox(width: 12),
+                                  const Text(
+                                    AppStrings.signUpWithGoogle,
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

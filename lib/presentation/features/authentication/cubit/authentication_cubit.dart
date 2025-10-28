@@ -59,6 +59,53 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
     }
   }
 
+  Future<void> googleSignIn() async {
+    emit(Authenticationloading());
+    try {
+      // Sign in with Google
+      final User? user = await _auth.signInWithGoogle();
+
+      if (user == null) {
+        emit(AuthenticationError(message: 'Google Sign-In cancelled'));
+        return;
+      }
+
+      // Check if user profile already exists
+      AppUser? appUser = await _firestore.getUserProfile(user.uid);
+
+      if (appUser == null) {
+        // Split display name into first and last name
+        String firstName = '';
+        String lastName = '';
+
+        if (user.displayName != null) {
+          final nameParts = user.displayName!.split(' ');
+          firstName = nameParts.first;
+          lastName = nameParts.length > 1 ? nameParts.sublist(1).join(' ') : '';
+        }
+
+        // Create new user profile from Google data
+
+        appUser = AppUser(
+          uid: user.uid,
+          email: user.email!,
+          firstName: firstName,
+          lastName: lastName,
+          profilePictureUrl: user.photoURL,
+        );
+
+        await _firestore.createUserProfile(appUser);
+      } else {
+        emit(AuthenticationError(message: AppStrings.googleSignInError));
+      }
+
+      emit(Authenticationloaded(currentUser: appUser));
+    } catch (e) {
+      print('❌ Google Sign-In error: $e');
+      emit(AuthenticationError(message: e.toString()));
+    }
+  }
+
   Future<void> signOut() async {
     emit(Authenticationloading());
     try {

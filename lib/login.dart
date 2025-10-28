@@ -140,7 +140,9 @@ class _LoginPageState extends State<LoginPage> {
                               width: double.infinity,
                               height: 56.0,
                               child: ElevatedButton(
-                                onPressed: _loginWithGoogle,
+                                onPressed: context
+                                    .read<AuthenticationCubit>()
+                                    .googleSignIn,
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: Colors.white,
                                   foregroundColor: Colors.black87,

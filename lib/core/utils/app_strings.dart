@@ -11,6 +11,7 @@ class AppStrings {
   static const String confirmPassword = "Confirm Password";
   static const String phoneNumber = "Phone Number";
   static const String logOut = "LogOut";
+  static const String or = "or";
   static const String username = "UserName";
   static const String emailIsValid = "Email is Required";
   static const String emailNotValid = "Email is Not Valid";
@@ -40,4 +41,7 @@ class AppStrings {
       "Invalid Sign Up Credentials , please try again.";
   static const String logininvalid =
       "Invalid log in Credentials , please try again.";
+  static const String googleSignInError =
+      'Failed to retrieve user profile after Google Sign-In';
+  static const String signUpWithGoogle = 'signUp with Google';
 }
