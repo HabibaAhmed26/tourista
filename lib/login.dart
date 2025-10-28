@@ -1,4 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tourista/core/di/di.dart';
+import 'package:tourista/core/models/user_model.dart';
+import 'package:tourista/core/utils/app_strings.dart';
+import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/profile/profile.dart';
 
 void main() {
   runApp(const MyApp());
@@ -217,100 +223,68 @@ class LoginPage extends StatelessWidget {
                                 ),
                                 const SizedBox(height: 16.0),
 
-                                // Password Field
-                                TextFormField(
-                                  obscureText: true,
-                                  decoration: InputDecoration(
-                                    labelText: 'Password',
-                                    hintText: 'Enter your password',
-                                    prefixIcon: Icon(Icons.lock, color: Colors.grey.shade600),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      borderSide: BorderSide(color: Colors.grey.shade300),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(12.0),
-                                      borderSide: const BorderSide(color: Colors.blue),
-                                    ),
-                                    filled: true,
-                                    fillColor: Colors.grey.shade50,
-                                    contentPadding: const EdgeInsets.symmetric(
-                                      horizontal: 16.0,
-                                      vertical: 16.0,
-                                    ),
-                                    suffixIcon: IconButton(
-                                      icon: Icon(
-                                        Icons.visibility_off,
-                                        color: Colors.grey.shade600,
+                        // Login Button
+                        SizedBox(
+                          width: double.infinity,
+                          height: 50.0,
+                          child:
+                              BlocListener<
+                                AuthenticationCubit,
+                                AuthenticationState
+                              >(
+                                listener: (context, state) {
+                                  if (state is AuthenticationError) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(state.message)),
+                                    );
+                                    print(state.message);
+                                  }
+                                  if (state is Authenticationloaded) {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Profile(),
                                       ),
-                                      onPressed: () {
-                                        // Toggle password visibility
-                                      },
+                                    );
+                                  }
+                                },
+                                child: ElevatedButton(
+                                  //onPressed: _login,
+                                  onPressed: () async {
+                                    await context
+                                        .read<AuthenticationCubit>()
+                                        .signIn(
+                                          _emailController.text,
+                                          _passwordController.text,
+                                        );
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Color.fromARGB(
+                                      255,
+                                      43,
+                                      35,
+                                      149,
+                                    ),
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                    ),
+                                    elevation: 0,
+                                  ),
+                                  child: const Text(
+                                    'Login',
+                                    style: TextStyle(
+                                      fontSize: 16.0,
+                                      fontWeight: FontWeight.w600,
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 20.0),
-
-                                // Remember Me Checkbox
-                                Row(
-                                  children: [
-                                    Checkbox(
-                                      value: false,
-                                      onChanged: (value) {
-                                        // Handle remember me
-                                      },
-                                      activeColor: Colors.blue,
-                                    ),
-                                    Text(
-                                      'Remember me',
-                                      style: TextStyle(
-                                        color: Colors.grey.shade700,
-                                      ),
-                                    ),
-                                    const Spacer(),
-                                    TextButton(
-                                      onPressed: () {
-                                        // Forgot password
-                                      },
-                                      child: Text(
-                                        'Forgot Password?',
-                                        style: TextStyle(
-                                          color: Colors.blue.shade700,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(height: 20.0),
-
-                                // Login Button
-                                SizedBox(
-                                  width: double.infinity,
-                                  height: 56.0,
-                                  child: ElevatedButton(
-                                    onPressed: _loginWithEmail,
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.blue,
-                                      foregroundColor: Colors.white,
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12.0),
-                                      ),
-                                      elevation: 3,
-                                      shadowColor: Colors.blue.withOpacity(0.3),
-                                    ),
-                                    child: const Text(
-                                      'Log in',
-                                      style: TextStyle(
-                                        fontSize: 16.0,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 24.0),
+                              ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 24.0),
 
                             // Register Link
                             Row(
