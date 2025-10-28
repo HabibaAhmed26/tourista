@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class OnboardingScreen extends StatelessWidget {
-  const OnboardingScreen({super.key});
+class OnboardingScreen3 extends StatelessWidget {
+  const OnboardingScreen3({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,6 +13,7 @@ class OnboardingScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+
               const SizedBox(height: 40),
 
               // Image (Centered and clipped)
@@ -23,7 +24,7 @@ class OnboardingScreen extends StatelessWidget {
                     width: 400,
                     height: 350,
                     child: Image.asset(
-                      'assets/44149.jpg', // <-- Make sure this file exists in your assets folder
+                      'assets/4063113.jpg', // <-- Make sure this file exists in your assets folder
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -34,7 +35,7 @@ class OnboardingScreen extends StatelessWidget {
 
               // Title
               const Text(
-                "Explore Egypt",
+                "Let's enjoy ",
                 style: TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
@@ -46,7 +47,7 @@ class OnboardingScreen extends StatelessWidget {
 
               // Subtitle
               const Text(
-                "Fast discovering new places based on ratings and best recommendations.",
+                "Enjoy your holiday’s and make amazing moments with your family and friends",
                 style: TextStyle(
                   fontSize: 14,
                   color: Colors.grey,
@@ -59,7 +60,6 @@ class OnboardingScreen extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-
                 ],
               ),
             ],
