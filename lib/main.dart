@@ -1,7 +1,9 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/theme/app_colors.dart';
 import 'package:tourista/firebase_options.dart';
@@ -9,11 +11,10 @@ import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
 import 'package:tourista/presentation/features/authentication/view/sign_up.dart';
 
-import 'package:flutter/material.dart';
-import 'Splash1.dart';  
-import 'Splash2.dart';   
-import 'Splash3.dart';  
-import 'login.dart'; 
+import 'Splash1.dart';
+import 'Splash2.dart';
+import 'Splash3.dart';
+import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,14 +28,14 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Tourista App',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        useMaterial3: true,
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => sl<AuthenticationCubit>())],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Tourista App',
+        theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
+        home: const OnboardingMain(),
       ),
-      home: const OnboardingMain(), 
     );
   }
 }
@@ -51,9 +52,9 @@ class _OnboardingMainState extends State<OnboardingMain> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const OnboardingScreen(),  
-    const OnboardingScreen2(), 
-    const OnboardingScreen3(), 
+    const OnboardingScreen(),
+    const OnboardingScreen2(),
+    const OnboardingScreen3(),
   ];
 
   void _nextPage() {
@@ -138,8 +139,8 @@ class _OnboardingMainState extends State<OnboardingMain> {
               backgroundColor: Colors.blue,
               onPressed: _nextPage,
               child: Icon(
-                _currentIndex == _screens.length - 1 
-                    ? Icons.check 
+                _currentIndex == _screens.length - 1
+                    ? Icons.check
                     : Icons.arrow_forward,
                 color: Colors.white,
               ),
@@ -175,6 +176,3 @@ class _OnboardingMainState extends State<OnboardingMain> {
     );
   }
 }
-
-
-

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourista/core/utils/app_assets.dart';
 
 class OnboardingScreen extends StatelessWidget {
   const OnboardingScreen({super.key});
@@ -23,7 +24,8 @@ class OnboardingScreen extends StatelessWidget {
                     width: 400,
                     height: 350,
                     child: Image.asset(
-                      'assets/44149.jpg', // <-- Make sure this file exists in your assets folder
+                      AppAssets
+                          .splash1, // <-- Make sure this file exists in your assets folder
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -47,10 +49,7 @@ class OnboardingScreen extends StatelessWidget {
               // Subtitle
               const Text(
                 "Fast discovering new places based on ratings and best recommendations.",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
 
               const Spacer(),
@@ -58,9 +57,7 @@ class OnboardingScreen extends StatelessWidget {
               // Page indicator and next button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-
-                ],
+                children: [],
               ),
             ],
           ),

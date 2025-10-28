@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tourista/core/utils/app_assets.dart';
 
 class OnboardingScreen3 extends StatelessWidget {
   const OnboardingScreen3({super.key});
@@ -13,7 +14,6 @@ class OnboardingScreen3 extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
               const SizedBox(height: 40),
 
               // Image (Centered and clipped)
@@ -24,7 +24,8 @@ class OnboardingScreen3 extends StatelessWidget {
                     width: 400,
                     height: 350,
                     child: Image.asset(
-                      'assets/4063113.jpg', // <-- Make sure this file exists in your assets folder
+                      AppAssets
+                          .splash3, // <-- Make sure this file exists in your assets folder
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -48,10 +49,7 @@ class OnboardingScreen3 extends StatelessWidget {
               // Subtitle
               const Text(
                 "Enjoy your holiday’s and make amazing moments with your family and friends",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Colors.grey,
-                ),
+                style: TextStyle(fontSize: 14, color: Colors.grey),
               ),
 
               const Spacer(),
@@ -59,8 +57,7 @@ class OnboardingScreen3 extends StatelessWidget {
               // Page indicator and next button
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                ],
+                children: [],
               ),
             ],
           ),

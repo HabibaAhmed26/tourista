@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/models/user_model.dart';
+import 'package:tourista/core/utils/app_assets.dart';
 import 'package:tourista/core/utils/app_strings.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/authentication/view/sign_up.dart';
 import 'package:tourista/presentation/features/profile/profile.dart';
 
 void main() {
@@ -17,19 +19,24 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Login',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        fontFamily: 'Roboto',
-      ),
+      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Roboto'),
       home: const LoginPage(),
       debugShowCheckedModeBanner: false,
     );
   }
 }
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
 
+  @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  bool _obscurePassword = true;
   void _loginWithGoogle() {
     print('Login with Google pressed');
   }
@@ -55,12 +62,12 @@ class LoginPage extends StatelessWidget {
                 height: constraints.maxHeight,
                 decoration: const BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/BG.jpg'),
+                    image: AssetImage(AppAssets.bg),
                     fit: BoxFit.cover,
                   ),
                 ),
               ),
-              
+
               // Dark Overlay for better readability
               Container(
                 width: constraints.maxWidth,
@@ -107,7 +114,7 @@ class LoginPage extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(height: 24.0),
-                            
+
                             // Login Title
                             const Text(
                               'Log in',
@@ -139,7 +146,9 @@ class LoginPage extends StatelessWidget {
                                   foregroundColor: Colors.black87,
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(12.0),
-                                    side: BorderSide(color: Colors.grey.shade300),
+                                    side: BorderSide(
+                                      color: Colors.grey.shade300,
+                                    ),
                                   ),
                                   elevation: 2,
                                   shadowColor: Colors.black.withOpacity(0.1),
@@ -147,11 +156,11 @@ class LoginPage extends StatelessWidget {
                                 child: Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
-                                     Image.asset(
-                                      'assets/pngwing.com.png',
+                                    Image.asset(
+                                      AppAssets.googleLogo,
                                       width: 24,
                                       height: 24,
-                                      ),
+                                    ),
                                     const SizedBox(width: 12),
                                     const Text(
                                       'Login with Google',
@@ -176,7 +185,9 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                                 Padding(
-                                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                                  padding: const EdgeInsets.symmetric(
+                                    horizontal: 16.0,
+                                  ),
                                   child: Text(
                                     'or',
                                     style: TextStyle(
@@ -201,17 +212,26 @@ class LoginPage extends StatelessWidget {
                               children: [
                                 // Email Field
                                 TextFormField(
+                                  controller: _emailController,
                                   decoration: InputDecoration(
                                     labelText: 'Email',
                                     hintText: 'Enter your email',
-                                    prefixIcon: Icon(Icons.email, color: Colors.grey.shade600),
+                                    prefixIcon: Icon(
+                                      Icons.email,
+                                      color: Colors.grey.shade600,
+                                    ),
+
                                     border: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.0),
-                                      borderSide: BorderSide(color: Colors.grey.shade300),
+                                      borderSide: BorderSide(
+                                        color: Colors.grey.shade300,
+                                      ),
                                     ),
                                     focusedBorder: OutlineInputBorder(
                                       borderRadius: BorderRadius.circular(12.0),
-                                      borderSide: const BorderSide(color: Colors.blue),
+                                      borderSide: const BorderSide(
+                                        color: Colors.blue,
+                                      ),
                                     ),
                                     filled: true,
                                     fillColor: Colors.grey.shade50,
@@ -221,70 +241,153 @@ class LoginPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const SizedBox(height: 16.0),
-
-                        // Login Button
-                        SizedBox(
-                          width: double.infinity,
-                          height: 50.0,
-                          child:
-                              BlocListener<
-                                AuthenticationCubit,
-                                AuthenticationState
-                              >(
-                                listener: (context, state) {
-                                  if (state is AuthenticationError) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(state.message)),
-                                    );
-                                    print(state.message);
-                                  }
-                                  if (state is Authenticationloaded) {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => Profile(),
+                                const SizedBox(height: 20.0),
+                                // Password Field
+                                TextFormField(
+                                  obscureText: _obscurePassword,
+                                  controller: _passwordController,
+                                  decoration: InputDecoration(
+                                    labelText: 'Password',
+                                    hintText: 'Enter your password',
+                                    prefixIcon: Icon(
+                                      Icons.lock,
+                                      color: Colors.grey.shade600,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderSide: BorderSide(
+                                        color: Colors.grey.shade300,
                                       ),
-                                    );
-                                  }
-                                },
-                                child: ElevatedButton(
-                                  //onPressed: _login,
-                                  onPressed: () async {
-                                    await context
-                                        .read<AuthenticationCubit>()
-                                        .signIn(
-                                          _emailController.text,
-                                          _passwordController.text,
-                                        );
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Color.fromARGB(
-                                      255,
-                                      43,
-                                      35,
-                                      149,
                                     ),
-                                    foregroundColor: Colors.white,
-                                    shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(8.0),
+                                    focusedBorder: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(12.0),
+                                      borderSide: const BorderSide(
+                                        color: Colors.blue,
+                                      ),
                                     ),
-                                    elevation: 0,
-                                  ),
-                                  child: const Text(
-                                    'Login',
-                                    style: TextStyle(
-                                      fontSize: 16.0,
-                                      fontWeight: FontWeight.w600,
+                                    filled: true,
+                                    fillColor: Colors.grey.shade50,
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 16.0,
+                                      vertical: 16.0,
+                                    ),
+                                    suffixIcon: IconButton(
+                                      icon: Icon(
+                                        _obscurePassword
+                                            ? Icons.visibility_off
+                                            : Icons.visibility,
+                                        color: Colors.grey,
+                                      ),
+                                      onPressed: () {
+                                        setState(() {
+                                          _obscurePassword = !_obscurePassword;
+                                        });
+                                      },
                                     ),
                                   ),
                                 ),
-                              ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 24.0),
+                                const SizedBox(height: 20.0),
+
+                                // Remember Me Checkbox
+                                Row(
+                                  children: [
+                                    Checkbox(
+                                      value: false,
+                                      onChanged: (value) {
+                                        // Handle remember me
+                                      },
+                                      activeColor: Colors.blue,
+                                    ),
+                                    Text(
+                                      'Remember me',
+                                      style: TextStyle(
+                                        color: Colors.grey.shade700,
+                                      ),
+                                    ),
+                                    const Spacer(),
+                                    TextButton(
+                                      onPressed: () {
+                                        // Forgot password
+                                      },
+                                      child: Text(
+                                        'Forgot Password?',
+                                        style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontWeight: FontWeight.w500,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(height: 20.0),
+
+                                // Login Button
+                                SizedBox(
+                                  width: double.infinity,
+                                  height: 50.0,
+                                  child:
+                                      BlocListener<
+                                        AuthenticationCubit,
+                                        AuthenticationState
+                                      >(
+                                        listener: (context, state) {
+                                          if (state is AuthenticationError) {
+                                            ScaffoldMessenger.of(
+                                              context,
+                                            ).showSnackBar(
+                                              SnackBar(
+                                                content: Text(state.message),
+                                              ),
+                                            );
+                                            print(state.message);
+                                          }
+                                          if (state is Authenticationloaded) {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) => Profile(),
+                                              ),
+                                            );
+                                          }
+                                        },
+                                        child: ElevatedButton(
+                                          //onPressed: _login,
+                                          onPressed: () async {
+                                            await context
+                                                .read<AuthenticationCubit>()
+                                                .signIn(
+                                                  _emailController.text,
+                                                  _passwordController.text,
+                                                );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Color.fromARGB(
+                                              255,
+                                              43,
+                                              35,
+                                              149,
+                                            ),
+                                            foregroundColor: Colors.white,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(8.0),
+                                            ),
+                                            elevation: 0,
+                                          ),
+                                          child: const Text(
+                                            'Login',
+                                            style: TextStyle(
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                ),
+                              ],
+                            ),
+
+                            const SizedBox(height: 24.0),
 
                             // Register Link
                             Row(
@@ -298,7 +401,14 @@ class LoginPage extends StatelessWidget {
                                   ),
                                 ),
                                 GestureDetector(
-                                  onTap: _navigateToRegister,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => SignUp(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text(
                                     'Register here',
                                     style: TextStyle(

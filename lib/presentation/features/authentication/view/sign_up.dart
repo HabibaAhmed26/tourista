@@ -265,7 +265,7 @@ class _SignUpState extends State<SignUp> {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(
-                                    builder: (context) => CleanLoginPage(),
+                                    builder: (context) => LoginPage(),
                                   ),
                                 );
                               },
