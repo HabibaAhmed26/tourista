@@ -10,18 +10,32 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<AuthenticationCubit>(),
-      child: Center(
-        child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
-          builder: (context, state) {
-            if (state is Authenticationloaded) {
-              return Text("Welcome, ${state.currentUser.firstName}");
-            } else if (state is Authenticationloading) {
-              return const CircularProgressIndicator();
-            } else {
-              return const Text("Please log in.");
-            }
-          },
-        ),
+      child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
+        builder: (context, state) {
+          return Scaffold(
+            drawer: Drawer(),
+            body: Column(
+              children: [
+                if (state is Authenticationloaded)
+                  CircleAvatar(
+                    child: Image.network(
+                      state.currentUser.profilePictureUrl ?? "",
+                      errorBuilder: (context, error, stackTrace) {
+                        return CircleAvatar(
+                          backgroundColor: Colors.grey[300],
+                          child: Icon(
+                            Icons.person,
+                            color: Colors.grey[600],
+                            size: 40,
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }

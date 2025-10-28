@@ -1,23 +1,17 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:tourista/core/di/di.dart';
-import 'package:tourista/core/theme/app_colors.dart';
-import 'package:tourista/firebase_options.dart';
+import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
-import 'package:tourista/presentation/features/authentication/view/sign_up.dart';
 
 import 'Splash1.dart';
 import 'Splash2.dart';
 import 'Splash3.dart';
-import 'login.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await setupLocator();
   runApp(const MyApp());
 }
@@ -34,7 +28,35 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Tourista App',
         theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-        home: const OnboardingMain(),
+        home: FutureBuilder<bool>(
+          future: Future.delayed(
+            const Duration(seconds: 4),
+            () => sl<PrefManager>().hasSeenOnboarding(),
+          ),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return const Scaffold(
+                body: Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      FlutterLogo(size: 100),
+                      SizedBox(height: 24),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                ),
+              );
+            }
+
+            final hasSeenOnboarding = snapshot.data ?? false;
+            if (hasSeenOnboarding) {
+              return const LoginPage();
+            } else {
+              return const OnboardingMain();
+            }
+          },
+        ),
       ),
     );
   }
@@ -57,6 +79,14 @@ class _OnboardingMainState extends State<OnboardingMain> {
     const OnboardingScreen3(),
   ];
 
+  Future<void> _completeOnboarding() async {
+    await sl<PrefManager>().setOnboardingSeen();
+    if (!mounted) return;
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoginPage()),
+    );
+  }
+
   void _nextPage() {
     if (_currentIndex < _screens.length - 1) {
       _pageController.nextPage(
@@ -64,10 +94,7 @@ class _OnboardingMainState extends State<OnboardingMain> {
         curve: Curves.easeInOut,
       );
     } else {
-      // Navigate to Login Page
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const LoginPage()),
-      );
+      _completeOnboarding();
     }
   }
 
@@ -80,10 +107,19 @@ class _OnboardingMainState extends State<OnboardingMain> {
     }
   }
 
-  void _skipToLogin() {
-    Navigator.of(context).pushReplacement(
-      MaterialPageRoute(builder: (context) => const LoginPage()),
-    );
+  Future<void> _skipToLogin() async {
+    await _completeOnboarding();
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
   }
 
   @override
