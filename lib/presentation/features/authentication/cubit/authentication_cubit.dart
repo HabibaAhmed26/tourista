@@ -95,8 +95,6 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         );
 
         await _firestore.createUserProfile(appUser);
-      } else {
-        emit(AuthenticationError(message: AppStrings.googleSignInError));
       }
 
       emit(Authenticationloaded(currentUser: appUser));

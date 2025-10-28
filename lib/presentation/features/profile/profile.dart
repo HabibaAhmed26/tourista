@@ -12,29 +12,41 @@ class Profile extends StatelessWidget {
       create: (context) => sl<AuthenticationCubit>(),
       child: BlocBuilder<AuthenticationCubit, AuthenticationState>(
         builder: (context, state) {
-          return Scaffold(
-            drawer: Drawer(),
-            body: Column(
-              children: [
-                if (state is Authenticationloaded)
-                  CircleAvatar(
-                    child: Image.network(
-                      state.currentUser.profilePictureUrl ?? "",
-                      errorBuilder: (context, error, stackTrace) {
-                        return CircleAvatar(
-                          backgroundColor: Colors.grey[300],
-                          child: Icon(
-                            Icons.person,
-                            color: Colors.grey[600],
-                            size: 40,
-                          ),
-                        );
-                      },
+          if (state is Authenticationloaded) {
+            return Scaffold(
+              drawer: Drawer(),
+              body: Column(
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 40,
+                      backgroundColor: Colors.grey[300],
+                      backgroundImage:
+                          state.currentUser.profilePictureUrl?.isNotEmpty ==
+                              true
+                          ? NetworkImage(state.currentUser.profilePictureUrl!)
+                          : null,
+                      child:
+                          state.currentUser.profilePictureUrl?.isNotEmpty ==
+                              true
+                          ? null
+                          : Icon(
+                              Icons.person,
+                              color: Colors.grey[600],
+                              size: 40,
+                            ),
                     ),
                   ),
-              ],
-            ),
-          );
+                  Text(state.currentUser.firstName),
+                ],
+              ),
+            );
+          } else {
+            return const Scaffold(
+              body: Center(child: CircularProgressIndicator()),
+            );
+          }
+          ;
         },
       ),
     );
