@@ -20,4 +20,8 @@ class FireStore {
     if (!doc.exists) return null;
     return AppUser.fromMap(doc.data()!);
   }
+
+  Future<void> updateUserProfile(AppUser user) async {
+    await _users.doc(user.uid).update(user.toMap());
+  }
 }

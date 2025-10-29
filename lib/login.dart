@@ -6,7 +6,7 @@ import 'package:tourista/core/utils/app_assets.dart';
 import 'package:tourista/core/utils/app_strings.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
 import 'package:tourista/presentation/features/authentication/view/sign_up.dart';
-import 'package:tourista/presentation/features/profile/profile.dart';
+import 'package:tourista/presentation/features/profile/view/profile.dart';
 
 void main() {
   runApp(const MyApp());

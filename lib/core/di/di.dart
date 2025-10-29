@@ -6,9 +6,11 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tourista/core/network/fireauth/fire_auth.dart';
 import 'package:tourista/core/network/firestore/firestore.dart';
+import 'package:tourista/core/network/img%20service/img_service.dart';
 import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/firebase_options.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 
 final GetIt sl = GetIt.instance;
 Future<void> setupLocator() async {
@@ -40,8 +42,17 @@ Future<void> setupLocator() async {
   sl.registerLazySingleton<PrefManager>(
     () => PrefManager(prefs: sl<SharedPreferences>()),
   );
+  sl.registerLazySingleton<ImgHosting>(
+    () => ImgHosting(firestore: sl<FireStore>()),
+  );
   //Features
   sl.registerLazySingleton<AuthenticationCubit>(
     () => AuthenticationCubit(auth: sl<FireAuth>(), firestore: sl<FireStore>()),
+  );
+  sl.registerLazySingleton<ProfileCubit>(
+    () => ProfileCubit(
+      authCubit: sl<AuthenticationCubit>(),
+      hosting: sl<ImgHosting>(),
+    ),
   );
 }

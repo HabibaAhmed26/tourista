@@ -4,6 +4,7 @@ import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 
 import 'Splash1.dart';
 import 'Splash2.dart';
@@ -23,7 +24,10 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => sl<AuthenticationCubit>())],
+      providers: [
+        BlocProvider(create: (context) => sl<AuthenticationCubit>()),
+        BlocProvider(create: (context) => sl<ProfileCubit>()),
+      ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Tourista App',

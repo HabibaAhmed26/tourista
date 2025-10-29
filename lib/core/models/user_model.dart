@@ -32,6 +32,7 @@ class AppUser {
 
   Map<String, dynamic> toMap() {
     return {
+      DocConstants.uid: uid,
       DocConstants.firstName: firstName,
       DocConstants.lastName: lastName,
       DocConstants.email: email,

@@ -13,7 +13,7 @@ import 'package:tourista/core/utils/validator/app_validator_types/name__validato
 import 'package:tourista/core/utils/validator/app_validator_types/password_validator.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
-import 'package:tourista/presentation/features/profile/profile.dart';
+import 'package:tourista/presentation/features/profile/view/profile.dart';
 import 'package:tourista/presentation/widgets/app_textfield.dart';
 import 'package:tourista/presentation/widgets/pattern_container.dart';
 

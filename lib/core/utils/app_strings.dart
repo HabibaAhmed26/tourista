@@ -44,4 +44,6 @@ class AppStrings {
   static const String googleSignInError =
       'Failed to retrieve user profile after Google Sign-In';
   static const String signUpWithGoogle = 'signUp with Google';
+  static const String chooseFromGallary = 'Choose from Gallery';
+  static const String takePhoto = 'Take Photo';
 }
