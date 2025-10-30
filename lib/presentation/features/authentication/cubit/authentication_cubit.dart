@@ -99,6 +99,7 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
         );
 
         await _firestore.createUserProfile(appUser);
+        await setUser(user.uid);
       }
 
       emit(Authenticationloaded(currentUser: appUser));
@@ -160,6 +161,20 @@ class AuthenticationCubit extends Cubit<AuthenticationState> {
       }
     } catch (e) {
       print('Error updating user: $e');
+      emit(AuthenticationError(message: e.toString()));
+    }
+  }
+
+  Future<void> setUser(String uid) async {
+    emit(Authenticationloading());
+    try {
+      final user = await _firestore.getUserProfile(uid);
+      if (user == null) {
+        emit(AuthenticationError(message: AppStrings.userNotFound));
+      } else {
+        emit(Authenticationloaded(currentUser: user));
+      }
+    } catch (e) {
       emit(AuthenticationError(message: e.toString()));
     }
   }

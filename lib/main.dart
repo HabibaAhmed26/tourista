@@ -4,6 +4,7 @@ import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/authentication/view/auth_wrapper.dart';
 import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 
 import 'Splash1.dart';
@@ -55,7 +56,7 @@ class MyApp extends StatelessWidget {
 
             final hasSeenOnboarding = snapshot.data ?? false;
             if (hasSeenOnboarding) {
-              return const LoginPage();
+              return const AuthWrapper();
             } else {
               return const OnboardingMain();
             }
