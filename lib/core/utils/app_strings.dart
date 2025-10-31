@@ -46,4 +46,9 @@ class AppStrings {
   static const String signUpWithGoogle = 'signUp with Google';
   static const String chooseFromGallary = 'Choose from Gallery';
   static const String takePhoto = 'Take Photo';
+  static const String resetPassword = 'Reset Password';
+  static const String enterEmail = 'Please enter your E-mail address';
+  static const String send = 'Send';
+  static const String emailSent = 'Email Sent Successfully';
+  static const String signOut = 'Sign Out';
 }

@@ -91,4 +91,8 @@ class FireAuth {
       rethrow;
     }
   }
+
+  Future<void> resetPassword(String email) {
+    return (_auth.sendPasswordResetEmail(email: email));
+  }
 }

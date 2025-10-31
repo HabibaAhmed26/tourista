@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourista/core/di/di.dart';
+import 'package:tourista/core/utils/app_strings.dart';
+import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
 import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 import 'package:tourista/presentation/features/profile/widgets/profile_picture.dart';
@@ -66,6 +68,23 @@ class _ProfileState extends State<Profile> {
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),
+                          ),
+                          const SizedBox(height: 8),
+                          ElevatedButton(
+                            onPressed: () {
+                              try {
+                                context.read<AuthenticationCubit>().signOut();
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => LoginPage(),
+                                  ),
+                                );
+                              } catch (e) {
+                                print('Error signing out: $e');
+                              }
+                            },
+                            child: Text(AppStrings.signOut),
                           ),
                         ],
                       ),

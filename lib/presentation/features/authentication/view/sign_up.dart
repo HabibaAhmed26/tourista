@@ -41,6 +41,17 @@ class _SignUpState extends State<SignUp> {
   bool _obscurePassword = true;
   bool _obscureConfirmPassword = true;
   @override
+  void dispose() {
+    _emailController.dispose();
+    _firstname.dispose();
+    _lastname.dispose();
+    _password.dispose();
+    _confirmPassword.dispose();
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return PatternContainer(
       child: Scaffold(
@@ -197,6 +208,7 @@ class _SignUpState extends State<SignUp> {
                             radius: 40,
                           ),
                           SizedBox(height: 5),
+                          //singup button
                           BlocListener<
                             AuthenticationCubit,
                             AuthenticationState
@@ -259,6 +271,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           SizedBox(height: 10),
+                          //Redirect to login
                           Center(
                             child: InkWell(
                               onTap: () {
@@ -276,6 +289,7 @@ class _SignUpState extends State<SignUp> {
                             ),
                           ),
                           Center(child: Text(AppStrings.or)),
+                          //Sign up with Google button
                           SizedBox(
                             width: double.infinity,
                             height: 56.0,
