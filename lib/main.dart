@@ -6,6 +6,7 @@ import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
 import 'package:tourista/presentation/features/authentication/view/auth_wrapper.dart';
+import 'package:tourista/presentation/features/map/cubit/location_cubit.dart';
 import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 
 import 'Splash1.dart';
@@ -29,6 +30,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider(create: (context) => sl<AuthenticationCubit>()),
         BlocProvider(create: (context) => sl<ProfileCubit>()),
+        BlocProvider(create: (context) => sl<LocationCubit>()),
       ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,

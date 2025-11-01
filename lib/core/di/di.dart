@@ -10,6 +10,7 @@ import 'package:tourista/core/network/img%20service/img_service.dart';
 import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/firebase_options.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
+import 'package:tourista/presentation/features/map/cubit/location_cubit.dart';
 import 'package:tourista/presentation/features/profile/cubit/profile_cubit.dart';
 
 final GetIt sl = GetIt.instance;
@@ -55,4 +56,5 @@ Future<void> setupLocator() async {
       hosting: sl<ImgHosting>(),
     ),
   );
+  sl.registerLazySingleton<LocationCubit>(() => LocationCubit());
 }
