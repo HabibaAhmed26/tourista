@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/models/user_model.dart';
+import 'package:tourista/core/routes/router_constants.dart';
 import 'package:tourista/core/utils/app_assets.dart';
 import 'package:tourista/core/utils/app_strings.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
@@ -358,12 +360,7 @@ class _LoginPageState extends State<LoginPage> {
                                             print(state.message);
                                           }
                                           if (state is Authenticationloaded) {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) => Profile(),
-                                              ),
-                                            );
+                                            context.go(RouterConstants.profile);
                                           }
                                         },
                                         child: ElevatedButton(
@@ -418,12 +415,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                                 GestureDetector(
                                   onTap: () {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => SignUp(),
-                                      ),
-                                    );
+                                    context.go(RouterConstants.signup);
                                   },
                                   child: const Text(
                                     'Register here',

@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tourista/core/di/di.dart';
 import 'package:tourista/core/models/user_model.dart';
+import 'package:tourista/core/routes/router_constants.dart';
 import 'package:tourista/core/theme/app_colors.dart';
 import 'package:tourista/core/theme/app_textStyles.dart';
 import 'package:tourista/core/utils/app_assets.dart';
@@ -220,12 +222,7 @@ class _SignUpState extends State<SignUp> {
                                 );
                               }
                               if (state is Authenticationloaded) {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => Profile(),
-                                  ),
-                                );
+                                context.go(RouterConstants.profile);
                               }
                             },
                             child: ElevatedButton(
@@ -275,12 +272,7 @@ class _SignUpState extends State<SignUp> {
                           Center(
                             child: InkWell(
                               onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
-                                  ),
-                                );
+                                context.go(RouterConstants.login);
                               },
                               child: Text(
                                 AppStrings.backToLogIn,

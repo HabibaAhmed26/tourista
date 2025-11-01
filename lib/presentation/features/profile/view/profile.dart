@@ -2,8 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:tourista/core/di/di.dart';
+import 'package:tourista/core/routes/router_constants.dart';
 import 'package:tourista/core/utils/app_strings.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
@@ -74,12 +76,7 @@ class _ProfileState extends State<Profile> {
                             onPressed: () {
                               try {
                                 context.read<AuthenticationCubit>().signOut();
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => LoginPage(),
-                                  ),
-                                );
+                                context.go(RouterConstants.login);
                               } catch (e) {
                                 print('Error signing out: $e');
                               }

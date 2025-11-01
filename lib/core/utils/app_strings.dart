@@ -1,4 +1,5 @@
 class AppStrings {
+  //consts
   static const String emailAddress = "Email Address";
   static const String password = "Password";
   static const String login = "Login";
@@ -13,6 +14,18 @@ class AppStrings {
   static const String logOut = "LogOut";
   static const String or = "or";
   static const String username = "UserName";
+  static const String signUpWithGoogle = 'signUp with Google';
+  static const String chooseFromGallary = 'Choose from Gallery';
+  static const String takePhoto = 'Take Photo';
+  static const String resetPassword = 'Reset Password';
+  static const String enterEmail = 'Please enter your E-mail address';
+  static const String send = 'Send';
+  static const String emailSent = 'Email Sent Successfully';
+  static const String signOut = 'Sign Out';
+  static const String home = 'Home';
+  static const String profile = 'Profile';
+  static const String map = 'map';
+  //errors
   static const String emailIsValid = "Email is Required";
   static const String emailNotValid = "Email is Not Valid";
   static const String passwordDontMatch = "Password doesnt match";
@@ -43,12 +56,4 @@ class AppStrings {
       "Invalid log in Credentials , please try again.";
   static const String googleSignInError =
       'Failed to retrieve user profile after Google Sign-In';
-  static const String signUpWithGoogle = 'signUp with Google';
-  static const String chooseFromGallary = 'Choose from Gallery';
-  static const String takePhoto = 'Take Photo';
-  static const String resetPassword = 'Reset Password';
-  static const String enterEmail = 'Please enter your E-mail address';
-  static const String send = 'Send';
-  static const String emailSent = 'Email Sent Successfully';
-  static const String signOut = 'Sign Out';
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:tourista/core/di/di.dart';
+import 'package:tourista/core/routes/router.dart';
 import 'package:tourista/core/storage/shared%20prefrences/shared_pref.dart';
 import 'package:tourista/login.dart';
 import 'package:tourista/presentation/features/authentication/cubit/authentication_cubit.dart';
@@ -29,40 +30,49 @@ class MyApp extends StatelessWidget {
         BlocProvider(create: (context) => sl<AuthenticationCubit>()),
         BlocProvider(create: (context) => sl<ProfileCubit>()),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        routerConfig: appRouter,
         title: 'Tourista App',
         theme: ThemeData(primarySwatch: Colors.blue, useMaterial3: true),
-        home: FutureBuilder<bool>(
-          future: Future.delayed(
-            const Duration(seconds: 4),
-            () => sl<PrefManager>().hasSeenOnboarding(),
-          ),
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return const Scaffold(
-                body: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      FlutterLogo(size: 100),
-                      SizedBox(height: 24),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
-                ),
-              );
-            }
-
-            final hasSeenOnboarding = snapshot.data ?? false;
-            if (hasSeenOnboarding) {
-              return const AuthWrapper();
-            } else {
-              return const OnboardingMain();
-            }
-          },
-        ),
       ),
+    );
+  }
+}
+
+class onBoarding extends StatelessWidget {
+  const onBoarding({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: Future.delayed(
+        const Duration(seconds: 4),
+        () => sl<PrefManager>().hasSeenOnboarding(),
+      ),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  FlutterLogo(size: 100),
+                  SizedBox(height: 24),
+                  CircularProgressIndicator(),
+                ],
+              ),
+            ),
+          );
+        }
+
+        final hasSeenOnboarding = snapshot.data ?? false;
+        if (hasSeenOnboarding) {
+          return const AuthWrapper();
+        } else {
+          return const OnboardingMain();
+        }
+      },
     );
   }
 }
